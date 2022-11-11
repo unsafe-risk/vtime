@@ -20,11 +20,8 @@ func (v Time) SetDate(d Date) Time {
 	return nv
 }
 
-func (v Time) Date(tz *time.Location) Date {
-	if tz == nil {
-		tz = time.Local
-	}
-	t := tt(v).In(tz)
+func (v Time) Date() Date {
+	t := tt(v)
 	return Date{
 		Year:  int64(t.Year()),
 		Month: Month(t.Month()),

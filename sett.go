@@ -4,6 +4,10 @@ import "time"
 
 func (v Time) SetNanosecond(s int64) Time {
 	nv := ft(time.Unix(int64(v.Unix), int64(s)))
+	if v.TZ == nil {
+		v.TZ = time.Local
+	}
+	nv.TZ = v.TZ
 	return nv
 }
 
@@ -14,6 +18,10 @@ func (v Time) Nanosecond() int64 {
 func (v Time) SetMicrosecond(s int64) Time {
 	const m = nano / micro
 	nv := ft(time.Unix(int64(v.Unix), int64(s)*m))
+	if v.TZ == nil {
+		v.TZ = time.Local
+	}
+	nv.TZ = v.TZ
 	return nv
 }
 
@@ -25,6 +33,10 @@ func (v Time) Microsecond() int64 {
 func (v Time) SetMillisecond(s int64) Time {
 	const m = nano / milli
 	nv := ft(time.Unix(int64(v.Unix), int64(s)*m))
+	if v.TZ == nil {
+		v.TZ = time.Local
+	}
+	nv.TZ = v.TZ
 	return nv
 }
 

@@ -9,16 +9,20 @@ type Parseable interface {
 type Time struct {
 	Unix int64
 	Nano int64
+	TZ   *time.Location
 }
 
 func ft(t time.Time) Time {
 	unix := t.Unix()
 	nano := t.Nanosecond()
-	return Time{Unix: unix, Nano: int64(nano)}
+	return Time{Unix: unix, Nano: int64(nano), TZ: t.Location()}
 }
 
 func tt(v Time) time.Time {
-	return time.Unix(int64(v.Unix), int64(v.Nano))
+	if v.TZ == nil {
+		v.TZ = time.Local
+	}
+	return time.Unix(int64(v.Unix), int64(v.Nano)).In(v.TZ)
 }
 
 func Now() Time {
