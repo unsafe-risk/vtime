@@ -42,12 +42,12 @@ func Max(tt ...Time) Time {
 	return m
 }
 
-// After returns true if t is after u.
-func After(t, u Time) bool {
-	return t.Unix > u.Unix || (t.Unix == u.Unix && t.Nano > u.Nano)
+// Equal returns true if t is equal to u.
+func (v Time) Equal(u Time) bool {
+	return v.Unix == u.Unix && v.Nano == u.Nano
 }
 
-// Before returns true if t is before u.
-func Before(t, u Time) bool {
-	return t.Unix < u.Unix || (t.Unix == u.Unix && t.Nano < u.Nano)
+// Equal returns true if t is equal to u.
+func (v Date) Equal(u Date) bool {
+	return v.Year == u.Year && v.Month == u.Month && v.Day == u.Day
 }
