@@ -45,3 +45,7 @@ func VTime[T Parseable](t ...T) Time {
 	// Default to Now()
 	return Now()
 }
+
+func (v *Time) Time() time.Time {
+	return tt(*v)
+}
