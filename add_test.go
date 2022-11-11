@@ -320,3 +320,24 @@ func TestSub(t *testing.T) {
 		}
 	})
 }
+
+func TestAddAddDuration(t *testing.T) {
+	// Fri Nov 11 2022 14:38:59 GMT+0000
+	v := vtime.Unix(1668177539).UTC()
+
+	v0 := v.AddDuration(10 * time.Second)
+	if v0.Second() != 9 {
+		t.Errorf("Expected 9, got %d", v0.Second())
+	}
+	if v0.Minute() != 39 {
+		t.Errorf("Expected 39, got %d", v0.Minute())
+	}
+	if v0.Hour() != 14 {
+		t.Errorf("Expected 14, got %d", v0.Hour())
+	}
+
+	v1 := vtime.Unix(1668177539 + 10).UTC()
+	if !v0.Equal(v1) {
+		t.Errorf("Expected %v, got %v", v1, v0)
+	}
+}

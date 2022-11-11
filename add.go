@@ -36,3 +36,7 @@ func (v Time) Add(x int64, unit string) Time {
 func (v Time) Subtract(x int64, unit string) Time {
 	return v.Add(-x, unit)
 }
+
+func (v Time) AddDuration(d time.Duration) Time {
+	return ft(tt(v).Add(d))
+}
