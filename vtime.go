@@ -7,19 +7,23 @@ type Parseable interface {
 }
 
 type Time struct {
-	Unix uint64
+	Unix int64
 	Nano uint64
 }
 
-func FromTime(t time.Time) Time {
+func ft(t time.Time) Time {
 	unix := t.Unix()
 	nano := t.Nanosecond()
-	return Time{Unix: uint64(unix), Nano: uint64(nano)}
+	return Time{Unix: unix, Nano: uint64(nano)}
+}
+
+func tt(v Time) time.Time {
+	return time.Unix(int64(v.Unix), int64(v.Nano))
 }
 
 func Now() Time {
 	now := time.Now()
-	return FromTime(now)
+	return ft(now)
 }
 
 func VTime[T Parseable](t ...T) Time {
@@ -29,13 +33,13 @@ func VTime[T Parseable](t ...T) Time {
 
 	switch v := any(&t[0]).(type) {
 	case *time.Time:
-		return FromTime(*v)
-	case *int64: // UNIX TIME
-		t := time.Unix(*v, 0)
-		return FromTime(t)
-	case *uint64: // UNIX TIME
-		t := time.Unix(int64(*v), 0)
-		return FromTime(t)
+		return ft(*v)
+	case *int64: // UNIX TIME MILLISECONDS
+		return UnixMilli(*v)
+	case *uint64: // UNIX TIME MILLISECONDS
+		return UnixMilli(int64(*v))
+	case *string:
+		// TODO: PARSE STRING
 	}
 
 	// Default to Now()
