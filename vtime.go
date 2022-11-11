@@ -8,13 +8,13 @@ type Parseable interface {
 
 type Time struct {
 	Unix int64
-	Nano uint64
+	Nano int64
 }
 
 func ft(t time.Time) Time {
 	unix := t.Unix()
 	nano := t.Nanosecond()
-	return Time{Unix: unix, Nano: uint64(nano)}
+	return Time{Unix: unix, Nano: int64(nano)}
 }
 
 func tt(v Time) time.Time {
