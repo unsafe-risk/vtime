@@ -57,6 +57,14 @@ func (v Time) Time() time.Time {
 	return tt(v)
 }
 
+func (v Time) In(tz *time.Location) Time {
+	if tz == nil {
+		tz = time.Local
+	}
+	v.TZ = tz
+	return v
+}
+
 func (v Time) UTC() Time {
 	v.TZ = time.UTC
 	return v
