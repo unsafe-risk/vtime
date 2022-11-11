@@ -56,3 +56,8 @@ type Month = time.Month
 func (v Time) Time() time.Time {
 	return tt(v)
 }
+
+func (v Time) UTC() Time {
+	v.TZ = time.UTC
+	return v
+}
