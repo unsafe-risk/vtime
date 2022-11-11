@@ -6,8 +6,10 @@ import (
 	"v8.run/go/vtime/internal/parse"
 )
 
+type WallClock struct{}
+
 type Parseable interface {
-	time.Time | int64 | uint64 | string
+	time.Time | int64 | uint64 | string | WallClock
 }
 
 type Time struct {
@@ -54,6 +56,8 @@ func VTime[T Parseable](t ...T) Time {
 			// TODO: Support custom time formats
 			return Now()
 		}
+	case *WallClock:
+		return Now()
 	}
 
 	// Default to Now()
