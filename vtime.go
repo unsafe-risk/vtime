@@ -1,6 +1,10 @@
 package vtime
 
-import "time"
+import (
+	"time"
+
+	"v8.run/go/vtime/internal/parse"
+)
 
 type Parseable interface {
 	time.Time | int64 | uint64 | string
@@ -43,11 +47,21 @@ func VTime[T Parseable](t ...T) Time {
 	case *uint64: // UNIX TIME MILLISECONDS
 		return UnixMilli(int64(*v))
 	case *string:
-		// TODO: PARSE STRING
+		if len(t) == 1 {
+			unix, nano, _ := parse.Parse8601(*v)
+			return Time{Unix: unix, Nano: nano, TZ: time.Local}
+		} else {
+			// TODO: Support custom time formats
+			return Now()
+		}
 	}
 
 	// Default to Now()
 	return Now()
+}
+
+func UTC[T Parseable](t ...T) Time {
+	return VTime(t...).UTC()
 }
 
 // January=1...December=12
