@@ -46,6 +46,9 @@ func VTime[T Parseable](t ...T) Time {
 	return Now()
 }
 
-func (v *Time) Time() time.Time {
-	return tt(*v)
+// January=1...December=12
+type Month = time.Month
+
+func (v Time) Time() time.Time {
+	return tt(v)
 }
