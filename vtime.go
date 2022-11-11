@@ -87,3 +87,12 @@ func (v Time) UTC() Time {
 	v.TZ = time.UTC
 	return v
 }
+
+func (v Time) Local() Time {
+	v.TZ = time.Local
+	return v
+}
+
+func (v Time) String() string {
+	return tt(v).Format(time.RFC3339Nano)
+}
